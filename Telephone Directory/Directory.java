@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +17,12 @@ public class Directory {
 	{
 		try 
 		{
-			Scanner sc = new Scanner(new FileReader("directory.txt"));
+			File file = new File("directory.txt");
+			if(!file.exists())
+			{
+				file.createNewFile();
+			}
+			Scanner sc = new Scanner(new FileReader(file));
 			String currentLine;
 			
 			while(sc.hasNext())
