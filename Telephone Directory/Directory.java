@@ -25,7 +25,6 @@ public class Directory {
 			
 			Scanner sc = new Scanner(new FileReader(file));
 			String currentLine;
-	
 			while(sc.hasNext())
 			{
 				currentLine = sc.nextLine();
