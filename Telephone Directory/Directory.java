@@ -2,15 +2,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 
 @SuppressWarnings("resource")
 public class Directory {
 	
-	static HashMap<String, String> map = new HashMap<String, String>();
+	static TreeMap<String, String> map = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 	
 	static void readFromFile()		//To read and store existing data into the TreeMap
 	{
@@ -19,10 +19,10 @@ public class Directory {
 			Scanner sc = new Scanner(new FileReader("directory.txt"));
 			String currentLine;
 			
-			while(sc.hasNextLine())
+			while(sc.hasNext())
 			{
 				currentLine = sc.nextLine();
-				String[] st = currentLine.split("\t\t");
+				String[] st = currentLine.split("  \\s+");
 				map.put(st[0], st[1]);
 			}
 			sc.close();
@@ -40,7 +40,7 @@ public class Directory {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("directory.txt"));
 			for(Entry<String, String> entry : map.entrySet())
 			{
-				bw.write(entry.getKey() + "\t\t" + entry.getValue() + "\n");
+				bw.write(String.format("%-20s %-15s \n", entry.getKey(), entry.getValue() ));
 			}
 			bw.close();
 		} 
@@ -55,10 +55,10 @@ public class Directory {
 		String name, phoneNo;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("Enter the name : ");
-		name = sc.next();
-		System.out.print("Enter the number : ");
-		phoneNo = sc.next();
+		System.out.print("Enter the name : ");			//Do not use nextLine() after next(), nextFoo()...
+		name = sc.nextLine();							//( except nextLine() itself ) as next() leaves \n 
+		System.out.print("Enter the number : ");		//in the buffer which will be accepted by the subsequent 
+		phoneNo = sc.nextLine();						//nextLine().
 		
 		map.put(name, phoneNo);	
 		writeToFile();
@@ -74,11 +74,11 @@ public class Directory {
 		do
 		{				
 			System.out.print("\nEnter your prefered search option : ");
-			ch = sc.next();
+			ch = sc.nextLine();
 			switch(ch)
 			{
 				case "1" :  System.out.print("Enter the name : ");
-							String name = sc.next();
+							String name = sc.nextLine();
 							
 							if(map.containsKey(name))
 							{
@@ -91,7 +91,7 @@ public class Directory {
 							break;
 							
 				case "2" :  System.out.print("Enter the Phone Number : ");
-							String phoneNo = sc.next();
+							String phoneNo = sc.nextLine();
 							
 							Set<String> allKeys = map.keySet();
 							Boolean flag = false;
@@ -131,13 +131,13 @@ public class Directory {
 			ch = sc.next();
 			switch(ch)
 			{
-				case "1" :  System.out.println("Details of all available people ");
+				case "1" :  System.out.println("\nDetails of all available people\n");
 							
 							if(!map.isEmpty())
 							{
 								for(Entry<String, String> entry : map.entrySet())
 								{
-									System.out.println(entry.getKey() + "\t\t" + entry.getValue());
+									System.out.format("%-20s %-15s \n", entry.getKey(), entry.getValue());
 								}
 							}
 							else
@@ -150,7 +150,7 @@ public class Directory {
 							Set<String> allKeys = map.keySet();
 							Boolean flag = false;
 							
-							System.out.println("\nDetails of all people with name starting with " + alpha);
+							System.out.println("\nDetails of all people with name starting with " + alpha + "\n");
 							for(String key : allKeys)
 							{
 								if(Character.toLowerCase(key.charAt(0)) == Character.toLowerCase(alpha))
@@ -180,16 +180,16 @@ public class Directory {
 		do
 		{				
 			System.out.print("\nEnter your prefered updation option : ");
-			ch = sc.next();
+			ch = sc.nextLine();
 			switch(ch)
 			{
 				case "1" :  System.out.print("Enter the name : ");
-							name = sc.next();
+							name = sc.nextLine();
 							
 							if(map.containsKey(name))
 							{
 								System.out.println("\nEnter the new Phone Number : ");
-								map.put(name, sc.next());
+								map.put(name, sc.nextLine());
 								System.out.println("\nThe new details of the person");
 								System.out.println("Name : " + name);
 								System.out.println("Phone Number : " + map.get(name));
@@ -200,7 +200,7 @@ public class Directory {
 							break;
 							
 				case "2" :  System.out.print("Enter the name : ");
-							name = sc.next();
+							name = sc.nextLine();
 							
 							if(map.containsKey(name))
 							{
