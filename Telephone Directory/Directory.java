@@ -22,9 +22,10 @@ public class Directory {
 			{
 				file.createNewFile();
 			}
+			
 			Scanner sc = new Scanner(new FileReader(file));
 			String currentLine;
-			
+	
 			while(sc.hasNext())
 			{
 				currentLine = sc.nextLine();
